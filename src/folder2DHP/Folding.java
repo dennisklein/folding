@@ -1,5 +1,7 @@
+package folder2DHP;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Folding {
 
@@ -11,6 +13,7 @@ public class Folding {
 		F, L, R
 	}
 
+	// construct Folding from String
 	public Folding(String folding) {
 		coordinates = null;
 		generateNewCoordinates = true;
@@ -28,6 +31,34 @@ public class Folding {
 				break;
 			case 'R':
 				this.folding.add(Direction.R);
+			default:
+				break;
+			}
+		}
+	}
+	
+	// construct random Folding for Sequence with given length
+	public Folding(int sizeOfSequence) {
+		coordinates = null;
+		generateNewCoordinates = true;
+		this.folding = new ArrayList<Folding.Direction>();
+		
+		this.folding.add(Direction.F);
+		
+		Random generator = new Random();
+		
+		for (int i = 0; i < sizeOfSequence - 2; i++) {
+			int n = generator.nextInt(3);
+			switch (n) {
+			case 0:
+				this.folding.add(Direction.L);
+				break;
+			case 1:
+				this.folding.add(Direction.F);
+				break;
+			case 2:
+				this.folding.add(Direction.R);
+				break;
 			default:
 				break;
 			}
@@ -118,5 +149,26 @@ public class Folding {
 		}
 		
 		return coordinates;
+	}
+	
+	@Override
+	public String toString() {
+		String s = new String();
+		for (Direction direction : folding) {
+			switch (direction) {
+			case L:
+				s += "L";
+				break;
+			case R:
+				s += "R";
+				break;
+			case F:
+				s += "F";
+				break;
+			default:
+				break;
+			}
+		}
+		return s;
 	}
 }

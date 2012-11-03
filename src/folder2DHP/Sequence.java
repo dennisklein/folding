@@ -1,6 +1,9 @@
+package folder2DHP;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import folder2DHP.Folding.Direction;
 
 
 public class Sequence {
@@ -92,5 +95,23 @@ public class Sequence {
 			}
 			System.out.println();
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String s = new String();
+		for (Element element : sequence) {
+			switch (element) {
+			case H:
+				s += "H";
+				break;
+			case P:
+				s += "P";
+				break;
+			default:
+				break;
+			}
+		}
+		return s;
 	}
 }

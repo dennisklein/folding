@@ -1,4 +1,5 @@
-public class Point2D implements Comparable<Point2D>{
+package folder2DHP;
+public class Point2D {
 	public int x;
 	public int y;
 
@@ -32,13 +33,12 @@ public class Point2D implements Comparable<Point2D>{
 	}
 	
 	@Override
-	public int compareTo(Point2D o) {
-		int result = 1;
-		if ((this.x == o.x) && (this.y == o.y)) {
-			result = 0;
-		}
-		return result;
+	public boolean equals(Object obj) {
+		if ( this == obj ) return true;
+		if ( !(obj instanceof Point2D) ) return false;
+		return ((this.x == ((Point2D)obj).x) && (this.y == ((Point2D)obj).y));
 	}
+	
 	
 	@Override
 	public String toString() {

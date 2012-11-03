@@ -1,13 +1,15 @@
+package folder2DHP;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Fitness {
+public class Energy {
 
 	private Sequence sequence;
 	private Folding folding;
 
-	public Fitness(Sequence sequence, Folding folding) {
+	public Energy(Sequence sequence, Folding folding) {
 		this.sequence = sequence;
 		this.folding = folding;
 	}
@@ -38,27 +40,42 @@ public class Fitness {
 	// If the set has the same length as the list, all coordinates were unique.
 	private boolean checkOverlaps() {
 		List<Point2D> coordinatesList = folding.getCoordinates();
-		Set<Point2D> coordinatesSet = new HashSet<Point2D>(coordinatesList);
+		Set<Point2D> coordinatesSet = new HashSet<Point2D>();
+
+		for (Point2D point2d : coordinatesList) {
+			boolean present = false;
+			for (Point2D point2d_ : coordinatesSet) {
+				if (point2d.equals(point2d_)) {
+					present = true;
+					break;
+				};
+			}
+			if (!present)
+				coordinatesSet.add(point2d);
+		}
 
 		return (coordinatesList.size() == coordinatesSet.size());
 	}
 
-	private int countAdjacentH() {		
+	private int countAdjacentH() {
 		int count = 0;
-		
+
 		for (int i = 0; i < sequence.getSequence().size(); i++) {
 			Sequence.Element element = sequence.getSequence().get(i);
 			if (element.equals(Sequence.Element.H)) {
-				for (int k = i+2; k < sequence.getSequence().size(); k++) {
-					double distance = folding.getCoordinates().get(i)
-							.getDistanceTo(folding.getCoordinates().get(k));
-					if (distance == 1.) {
-						++count;
+				for (int k = i + 2; k < sequence.getSequence().size(); k++) {
+					if (sequence.getSequence().get(k)
+							.equals(Sequence.Element.H)) {
+						double distance = folding.getCoordinates().get(i)
+								.getDistanceTo(folding.getCoordinates().get(k));
+						if (distance == 1.) {
+							++count;
+						}
 					}
 				}
 			}
 		}
-		
+
 		return count;
 	}
 }
